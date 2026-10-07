@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toca - Poupança Gamificada com IA</title>
+    <link rel="stylesheet" href="/toca-style.css" />
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container-nav">
+            <div class="logo">
+                <span class="logo-emoji">🐰</span>
+                <span class="logo-text">Toca</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#como-funciona">Como Funciona</a></li>
+                <li><a href="#simulador">Simulador</a></li>
+                <li><a href="#diferenciais">Diferenciais</a></li>
+                <li><a href="#cta-final" class="btn-nav">Começar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Bem-vindo à sua <span class="destaque">Toca</span> 🐰</h1>
+                <p class="hero-subtitle">Cada real que você poupa nasce como um coelhinho. Veja seu dinheiro crescer de forma mágica.</p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="scrollTo('#cta-final')">Começar a Poupar</button>
+                    <button class="btn-secondary" onclick="scrollTo('#simulador')">Ver Simulador</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="toca-preview">
+                    <div class="toca-buraco"></div>
+                    <div class="coelhos-hero">
+                        <div class="coelho">🐰</div>
+                        <div class="coelho">🐇</div>
+                        <div class="coelho">🐰</div>
+                        <div class="coelho">🐇</div>
+                        <div class="coelho">🐰</div>
+                    </div>
+                    <div class="grama"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="como-funciona" class="como-funciona">
+        <h2>Como Funciona</h2>
+        <div class="passos">
+            <div class="passo">
+                <div class="passo-numero">1</div>
+                <h3>Comece com um Aporte</h3>
+                <p>Defina quanto você quer guardar por mês. Começa pequeno? Sem problema! 💚</p>
+                <div class="passo-visual">💵</div>
+            </div>
+            <div class="passo">
+                <div class="passo-numero">2</div>
+                <h3>Seus Coelhinhos Nascem</h3>
+                <p>Cada real economizado vira um coelhinho na sua Toca virtual. Quanto mais você poupa, mais coelhos nascem! 🐰</p>
+                <div class="passo-visual">🐰</div>
+            </div>
+            <div class="passo">
+                <div class="passo-numero">3</div>
+                <h3>Veja a Magia Acontecer</h3>
+                <p>Os coelhinhos se reproduzem (juros compostos). Seu dinheiro cresce enquanto você dorme! 📈</p>
+                <div class="passo-visual">✨</div>
+            </div>
+            <div class="passo">
+                <div class="passo-numero">4</div>
+                <h3>Nina te Ajuda no Caminho</h3>
+                <p>Nossa IA coach motiva você, ajusta suas metas e celebra cada vitória. Sem culpa, só apoio! 💛</p>
+                <div class="passo-visual">🤖</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIMULADOR -->
+    <section id="simulador" class="simulador">
+        <div class="simulador-container">
+            <h2>Veja o Futuro do Seu Dinheiro</h2>
+            <p class="simulador-subtitle">Ajuste o aporte mensal e prazo para ver quantos coelhinhos você terá!</p>
+            
+            <div class="simulador-content">
+                <div class="simulador-inputs">
+                    <div class="input-group">
+                        <label for="aporte">Aporte Mensal (R$)</label>
+                        <input type="range" id="aporte" min="50" max="2000" value="300" class="slider">
+                        <span class="valor-aporte">R$ 300</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="prazo">Prazo (meses)</label>
+                        <input type="range" id="prazo" min="3" max="60" value="12" class="slider">
+                        <span class="valor-prazo">12 meses</span>
+                    </div>
+                </div>
+
+                <div class="simulador-resultado">
+                    <div class="resultado-card">
+                        <h3>Após <span id="resultado-prazo">12</span> meses</h3>
+                        <div class="resultado-valor">R$ <span id="resultado-total">3.600</span></div>
+                        <div class="resultado-coelhos">
+                            <span class="coelho-count"><span id="coelho-numero">36</span> 🐰</span>
+                        </div>
+                        <p class="resultado-subtexto">Com juros compostos de ~5% a.a.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELA PRINCIPAL DO APP -->
+    <section class="mockup-app">
+        <h2>Sua Experiência Dentro do App</h2>
+        <div class="mockups-container">
+            <div class="mockup">
+                <div class="mockup-header">Minha Toca</div>
+                <div class="mockup-content">
+                    <div class="toca-main">
+                        <div class="toca-buraco-main"></div>
+                        <div class="coelhos-main">
+                            <div class="coelho-main">🐰</div>
+                            <div class="coelho-main">🐇</div>
+                            <div class="coelho-main">🐰</div>
+                            <div class="coelho-main">🐇</div>
+                        </div>
+                        <div class="grama-main"></div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-label">Total Guardado</span>
+                            <span class="stat-value">R$ 1.200</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Coelhos</span>
+                            <span class="stat-value">120 🐰</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Semanas Seguidas</span>
+                            <span class="stat-value">8 ⭐</span>
+                        </div>
+                    </div>
+                    <button class="btn-alimentar">Alimentar a Toca 💵</button>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">Chat com Nina</div>
+                <div class="mockup-content">
+                    <div class="chat">
+                        <div class="mensagem-nina">
+                            <span class="nina-avatar">🤖</span>
+                            <div class="mensagem-texto">
+                                <p>Oi! Sou a Nina! 💛 Vi que você guardou R$ 300 esse mês. Que legal!</p>
+                            </div>
+                        </div>
+                        <div class="mensagem-usuario">
+                            <div class="mensagem-texto">
+                                <p>Obrigado! Mas não consegui guardar mais...</p>
+                            </div>
+                        </div>
+                        <div class="mensagem-nina">
+                            <span class="nina-avatar">🤖</span>
+                            <div class="mensagem-texto">
+                                <p>Relaxa! Você está fazendo um ótimo trabalho. Semana que vem será diferente? 🌟</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">Conquistas</div>
+                <div class="mockup-content">
+                    <div class="badges">
+                        <div class="badge unlocked">
+                            <span class="badge-emoji">🏆</span>
+                            <span class="badge-text">Primeiro Aporte</span>
+                        </div>
+                        <div class="badge unlocked">
+                            <span class="badge-emoji">🔥</span>
+                            <span class="badge-text">Streak 7 Dias</span>
+                        </div>
+                        <div class="badge locked">
+                            <span class="badge-emoji">💎</span>
+                            <span class="badge-text">R$ 5.000 Guardados</span>
+                        </div>
+                        <div class="badge locked">
+                            <span class="badge-emoji">👑</span>
+                            <span class="badge-text">1000 Coelhos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section id="diferenciais" class="diferenciais">
+        <h2>Por Que Toca é Diferente?</h2>
+        <div class="diferenciais-grid">
+            <div class="diferencial-card">
+                <div class="diferencial-icon">🤖</div>
+                <h3>Coach IA Empático</h3>
+                <p>Nina não julga. Ela entende que guardar dinheiro é difícil e está aqui para te apoiar, não culpar.</p>
+            </div>
+            <div class="diferencial-card">
+                <div class="diferencial-icon">🐰</div>
+                <h3>Gamificação Real</h3>
+                <p>Coelhinhos, badges, streaks e metas são mais motivadores do que números frios em uma planilha.</p>
+            </div>
+            <div class="diferencial-card">
+                <div class="diferencial-icon">✨</div>
+                <h3>Juros Compostos Visuais</h3>
+                <p>Veja literalmente o seu dinheiro "se reproduzindo". A metáfora dos coelhos torna tudo claro e emocionante.</p>
+            </div>
+            <div class="diferencial-card">
+                <div class="diferencial-icon">📊</div>
+                <h3>Simulador Inteligente</h3>
+                <p>Teste cenários futuros antes de começar. Saiba exatamente quanto terá e quando.</p>
+            </div>
+            <div class="diferencial-card">
+                <div class="diferencial-icon">💚</div>
+                <h3>Sem Julgamento</h3>
+                <p>Falhando na meta? Tudo bem. Nina te motiva a tentar de novo na próxima semana.</p>
+            </div>
+            <div class="diferencial-card">
+                <div class="diferencial-icon">🎯</div>
+                <h3>Educação Financeira Leve</h3>
+                <p>Aprenda sobre economia, investimento e juros compostos de forma natural e acessível.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROVA SOCIAL / BENEFÍCIOS -->
+    <section class="beneficios">
+        <h2>O Que Você Ganha com Toca</h2>
+        <div class="beneficios-list">
+            <div class="beneficio">
+                <span class="beneficio-emoji">💰</span>
+                <h4>Economia Sem Esforço</h4>
+                <p>Transformar poupança em jogo torna muito mais fácil manter o hábito.</p>
+            </div>
+            <div class="beneficio">
+                <span class="beneficio-emoji">📚</span>
+                <h4>Educação Financeira Descomplicada</h4>
+                <p>Entenda juros, investimento e planejamento sem termos técnicos confusos.</p>
+            </div>
+            <div class="beneficio">
+                <span class="beneficio-emoji">🎉</span>
+                <h4>Celebração das Pequenas Vitórias</h4>
+                <p>Cada aporte é uma vitória. Cada streak, uma conquista real.</p>
+            </div>
+            <div class="beneficio">
+                <span class="beneficio-emoji">🛡️</span>
+                <h4>Suporte Emocional</h4>
+                <p>Nina está aqui para te motivar nos meses difíceis, sem fazer você se sentir mal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="cta-final" class="cta-final">
+        <div class="cta-content">
+            <h2>Pronto para Construir Sua Toca? 🐰</h2>
+            <p>Comece a guardar dinheiro de forma divertida e veja seus coelhinhos crescerem!</p>
+            <div class="cta-buttons">
+                <button class="btn-primary-large" onclick="openModal()">Criar Minha Toca Agora</button>
+                <button class="btn-secondary-large" onclick="toggleInfo()">Saiba Mais</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🐰 Toca</h4>
+                <p>Poupança gamificada com IA para jovens adultos.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#como-funciona">Como Funciona</a></li>
+                    <li><a href="#simulador">Simulador</a></li>
+                    <li><a href="#diferenciais">Diferenciais</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#privacy">Privacidade</a></li>
+                    <li><a href="#terms">Termos de Uso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Toca. Feito com 💚 para suas economias.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE CADASTRO -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Crie Sua Toca 🐰</h2>
+            <form class="signup-form">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" placeholder="Qual é seu nome?" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" placeholder="Crie uma senha" required>
+                </div>
+                <button type="submit" class="btn-primary-large">Começar Agora</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/toca-script.js"></script>
+</body>
+</html>
