@@ -1,0 +1,16 @@
+{
+  "name": "educacao-financeira-app",
+  "version": "1.0.0",
+  "description": "Aplicação web para educação financeira com cadastro de usuários",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
