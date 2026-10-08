@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toca - App Funcional</title>
+    <style>
+        :root {
+            --marrom: #8B5E3C;
+            --verde: #4C9A6A;
+            --dourado: #FFB84C;
+            --rosa: #F2A6B2;
+            --creme: #FFF8F0;
+            --marrom-escuro: #5A3623;
+            --texto: #3D2D25;
+            --cinza: #6E5D55;
+            --branco: #ffffff;
+            --sombra: 0 16px 40px rgba(95, 63, 46, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--creme);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 999px;
+            padding: 14px 24px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--marrom), #A26544);
+            color: var(--branco);
+            box-shadow: var(--sombra);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.45);
+            border: 2px solid rgba(139, 94, 60, 0.25);
+            color: var(--marrom-escuro);
+        }
+
+        .btn-small {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(14px);
+            background: rgba(255, 248, 240, 0.9);
+            border-bottom: 1px solid rgba(139, 94, 60, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .topbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 70px;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--marrom-escuro);
+        }
+
+        .logo-bola {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dourado), var(--rosa));
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 18px rgba(255, 184, 76, 0.4);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--marrom-escuro);
+        }
+
+        .user-email {
+            font-size: 0.85rem;
+            color: var(--cinza);
+        }
+
+        .logout-btn {
+            background: rgba(255, 100, 100, 0.1);
+            color: #c63838;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 100, 100, 0.2);
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e7f0ff 0%, #f8fbff 100%);
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--branco);
+            border: 1px solid rgba(139, 94, 60, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--sombra);
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            color: var(--marrom-escuro);
+            margin: 0 0 8px;
+        }
+
+        .auth-card p {
+            text-align: center;
+            color: var(--cinza);
+            margin: 0 0 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            color: var(--marrom-escuro);
+        }
+
+        .form-group input {
+            padding: 12px 14px;
+            border: 1px solid rgba(139, 94, 60, 0.15);
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 4px rgba(76, 154, 106, 0.12);
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: var(--cinza);
+        }
+
+        .toggle-form button {
+            background: none;
+            border: none;
+            color: var(--verde);
+            cursor: pointer;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .app-container.active {
+            display: block;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .toca-main {
+            background: linear-gradient(180deg, #f9d7ae, #f5c78d);
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: var(--sombra);
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toca-visual {
+            position: relative;
+            height: 320px;
+            background: linear-gradient(180deg, #f7e0b6, #f3d2a1 35%, #e6c08d 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .buraco {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(180deg, #7a4c2d, #56331d);
+            border-radius: 50% 50% 42% 42%;
+            box-shadow: inset 0 20px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .coelhos-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 16px;
+            padding: 60px 30px 140px;
+            overflow: hidden;
+        }
+
+        .coelho-item {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            font-size: 2rem;
+            box-shadow: 0 8px 16px rgba(92, 68, 52, 0.08);
+            animation: bob 3s ease-in-out infinite;
+        }
+
+        .coelho-item.especial {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .coelho-item.novo {
+            animation: fadeInPop 0.6s ease-out;
+        }
+
+        @keyframes bob {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes fadeInPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--cinza);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--marrom-escuro);
+        }
+
+        .aporte-form {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 18px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .aporte-form h3 {
+            margin: 0 0 12px;
+            color: var(--marrom-escuro);
+            font-size: 1.1rem;
+        }
+
+        .aporte-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-compact {
+            padding: 10px 12px;
+            border: 1px solid rgba(139, 94, 60, 0.15);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-compact:focus {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 3px rgba(76, 154, 106, 0.1);
+        }
+
+        .aporte-form button {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--verde), #6AC087);
+            color: var(--branco);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .aporte-form button:hover {
+            transform: translateY(-2px);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card-sec {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(95, 63, 46, 0.05);
+        }
+
+        .card-sec h3 {
+            margin: 0 0 16px;
+            color: var(--marrom-escuro);
+            font-size: 1.1rem;
+        }
+
+        .historico-list {
+            display: grid;
+            gap: 10px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .historico-item {
+            background: rgba(76, 154, 106, 0.08);
+            border-left: 3px solid var(--verde);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--marrom-escuro);
+        }
+
+        .historico-data {
+            font-weight: 700;
+            color: var(--verde);
+        }
+
+        .historico-coelhos {
+            font-size: 0.85rem;
+            color: var(--cinza);
+        }
+
+        .simulador-section {
+            background: linear-gradient(180deg, rgba(255, 184, 76, 0.12), rgba(255, 248, 240, 0.9));
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 28px;
+            padding: 30px;
+            margin-top: 24px;
+        }
+
+        .simulador-section h2 {
+            margin: 0 0 24px;
+            color: var(--marrom-escuro);
+            font-size: 1.8rem;
+        }
+
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .slider-group {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--marrom-escuro);
+        }
+
+        .slider-label span {
+            color: var(--verde);
+        }
+
+        .slider {
+            width: 100%;
+            accent-color: var(--verde);
+            height: 8px;
+            border-radius: 999px;
+        }
+
+        .result-sim {
+            background: linear-gradient(180deg, #fffaf5, #fff4e8);
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .result-sim h4 {
+            margin: 0 0 10px;
+            color: var(--marrom-escuro);
+            font-size: 1.3rem;
+        }
+
+        .money-big {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--verde);
+            letter-spacing: -0.05em;
+        }
+
+        .coelhos-big {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--marrom-escuro);
+        }
+
+        .comparacao-section {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 18px;
+        }
+
+        .comparacao-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .comparacao-card {
+            background: rgba(76, 154, 106, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .comparacao-card h5 {
+            margin: 0 0 8px;
+            color: var(--marrom-escuro);
+            font-size: 0.9rem;
+        }
+
+        .comparacao-valor {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--verde);
+        }
+
+        .nina-section {
+            background: linear-gradient(180deg, rgba(242, 166, 178, 0.12), rgba(255, 248, 240, 0.9));
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 28px;
+            padding: 30px;
+            margin-top: 24px;
+        }
+
+        .nina-section h2 {
+            margin: 0 0 24px;
+            color: var(--marrom-escuro);
+            font-size: 1.8rem;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            display: grid;
+            gap: 14px;
+            margin-bottom: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .msg {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .msg.nina .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFB84C, #F2A6B2);
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .msg.user .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #ddd;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .msg.user {
+            justify-content: flex-end;
+        }
+
+        .msg-text {
+            background: rgba(76, 154, 106, 0.08);
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: var(--marrom-escuro);
+            max-width: 80%;
+        }
+
+        .msg.user .msg-text {
+            background: rgba(76, 154, 106, 0.25);
+        }
+
+        .conquistas-section {
+            background: linear-gradient(180deg, rgba(255, 184, 76, 0.12), rgba(255, 248, 240, 0.9));
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 28px;
+            padding: 30px;
+            margin-top: 24px;
+        }
+
+        .conquistas-section h2 {
+            margin: 0 0 24px;
+            color: var(--marrom-escuro);
+            font-size: 1.8rem;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .badge-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(139, 94, 60, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .badge-item.unlocked {
+            background: linear-gradient(135deg, rgba(76, 154, 106, 0.1), rgba(255, 184, 76, 0.1));
+            border-color: var(--verde);
+        }
+
+        .badge-item.locked {
+            opacity: 0.5;
+        }
+
+        .badge-emoji {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .badge-name {
+            font-weight: 700;
+            color: var(--marrom-escuro);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .badge-desc {
+            font-size: 0.8rem;
+            color: var(--cinza);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            place-items: center;
+            background: rgba(52, 32, 24, 0.55);
+            z-index: 60;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: grid;
+        }
+
+        .modal-card {
+            width: min(420px, 100%);
+            background: #fffdfb;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 30px 80px rgba(29, 17, 13, 0.2);
+            position: relative;
+        }
+
+        .modal-card h3 {
+            margin: 0 0 16px;
+            text-align: center;
+            font-size: 1.6rem;
+            color: var(--marrom-escuro);
+        }
+
+        @media (max-width: 980px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .simulator-grid,
+            .badges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparacao-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .topbar-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .badges-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .aporte-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .demo-reset {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(198, 56, 56, 0.1);
+            color: #c63838;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            font-size: 0.85rem;
+        }
+
+        .demo-reset:hover {
+            background: rgba(198, 56, 56, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTH SECTION -->
+<div id="authContainer" class="auth-container">
+    <div class="auth-card">
+        <h2 id="authTitle">Faça Login</h2>
+        <p id="authSubtitle">Bem-vindo à Toca 🐰</p>
+
+        <form id="authForm">
+            <div id="registerFields" style="display: none;">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input id="registerName" type="text" placeholder="Seu nome" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail</label>
+                <input id="authEmail" type="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <input id="authPassword" type="password" placeholder="Sua senha" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary auth-btn">Entrar</button>
+        </form>
+
+        <div class="toggle-form">
+            <span id="toggleText">Não tem conta?</span>
+            <button type="button" id="toggleBtn" onclick="toggleAuthMode()">Cadastre-se</button>
+        </div>
+    </div>
+</div>
+
+<!-- APP SECTION -->
+<div id="appContainer" class="app-container">
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="logo">
+                <div class="logo-bola">🐰</div>
+                <span>Toca</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-name" id="userNameDisplay">Usuário</div>
+                    <div class="user-email" id="userEmailDisplay">email@example.com</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="app-grid">
+            <!-- TOCA PRINCIPAL -->
+            <div class="toca-main">
+                <h2 style="margin: 0 0 16px; color: var(--marrom-escuro);">Minha Toca 🐰</h2>
+
+                <div class="toca-visual">
+                    <div class="coelhos-container" id="coelhosContainer">
+                        <!-- Coelhos inseridos dinamicamente -->
+                    </div>
+                    <div class="buraco"></div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-label">Total Guardado</span>
+                        <span class="stat-value" id="totalGuardado">R$ 0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Coelhinhos</span>
+                        <span class="stat-value" id="totalCoelhos">0 🐰</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Streak (Semanas)</span>
+                        <span class="stat-value" id="streakValue">0 🔥</span>
+                    </div>
+                </div>
+
+                <div class="aporte-form">
+                    <h3>Alimentar a Toca 💵</h3>
+                    <div class="aporte-inputs">
+                        <input type="number" id="aporteValor" class="input-compact" placeholder="Valor (R$)" min="1" step="0.01">
+                        <input type="date" id="aporteData" class="input-compact">
+                    </div>
+                    <button type="button" onclick="adicionarAporte()">Guardar Hoje</button>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <!-- HISTÓRICO -->
+                <div class="card-sec">
+                    <h3>📜 Histórico</h3>
+                    <div class="historico-list" id="historicoList">
+                        <!-- Itens inseridos dinamicamente -->
+                    </div>
+                </div>
+
+                <!-- STATS ADICIONAIS -->
+                <div class="card-sec">
+                    <h3>📊 Este Mês</h3>
+                    <div class="stat" style="margin-bottom: 8px;">
+                        <span class="stat-label">Aportes</span>
+                        <span class="stat-value" id="aportesNoMes">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Total do Mês</span>
+                        <span class="stat-value" id="totalNoMes">R$ 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIMULADOR -->
+        <section class="simulador-section">
+            <h2>🔮 Simulador: Seu Futuro</h2>
+
+            <div class="simulator-grid">
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Aporte Mensal</span>
+                        <span id="sliderAporteLabel">R$ 300</span>
+                    </div>
+                    <input id="sliderAporte" class="slider" type="range" min="50" max="500" value="300">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Prazo</span>
+                        <span id="sliderPrazoLabel">12 meses</span>
+                    </div>
+                    <input id="sliderPrazo" class="slider" type="range" min="3" max="60" value="12">
+                </div>
+
+                <div class="result-sim">
+                    <h4>Resultado Projetado</h4>
+                    <div class="money-big">R$ <span id="simTotal">3600</span></div>
+                    <div class="coelhos-big"><span id="simCoelhos">36</span> 🐰 coelhinhos</div>
+                </div>
+
+                <div class="comparacao-section">
+                    <h5 style="margin: 0 0 12px; color: var(--marrom-escuro); font-size: 1rem;">Comparação: 1 ano</h5>
+                    <div class="comparacao-grid">
+                        <div class="comparacao-card">
+                            <h5>Guardando de vez em quando</h5>
+                            <div class="comparacao-valor">R$ <span id="compOcasional">1200</span></div>
+                            <small style="color: var(--cinza);">~3 aportes</small>
+                        </div>
+                        <div class="comparacao-card">
+                            <h5>Guardando todo mês</h5>
+                            <div class="comparacao-valor">R$ <span id="compConstante">3600</span></div>
+                            <small style="color: var(--cinza);">R$ 300/mês</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NINA (COACH) -->
+        <section class="nina-section">
+            <h2>💬 Chat com Nina (Coach IA)</h2>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Mensagens inseridas dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CONQUISTAS -->
+        <section class="conquistas-section">
+            <h2>🏆 Conquistas & Badges</h2>
+
+            <div class="badges-grid" id="badgesGrid">
+                <!-- Badges inseridos dinamicamente -->
+            </div>
+        </section>
+    </main>
+
+    <button class="demo-reset" onclick="resetarDemo()">🔄 Reiniciar Demo</button>
+</div>
+
+<script>
+    // ============================================
+    // GERENCIAMENTO DE AUTENTICAÇÃO
+    // ============================================
+    let authMode = 'login';
+    let usuarioAtual = null;
+
+    function toggleAuthMode() {
+        authMode = authMode === 'login' ? 'register' : 'login';
+        const title = document.getElementById('authTitle');
+        const subtitle = document.getElementById('authSubtitle');
+        const registerFields = document.getElementById('registerFields');
+        const toggleText = document.getElementById('toggleText');
+        const toggleBtn = document.getElementById('toggleBtn');
+
+        if (authMode === 'register') {
+            title.textContent = 'Criar Conta';
+            subtitle.textContent = 'Bem-vindo! Vamos começar a poupar';
+            registerFields.style.display = 'block';
+            toggleText.textContent = 'Já tem conta?';
+            toggleBtn.textContent = 'Faça Login';
+        } else {
+            title.textContent = 'Faça Login';
+            subtitle.textContent = 'Bem-vindo à Toca 🐰';
+            registerFields.style.display = 'none';
+            toggleText.textContent = 'Não tem conta?';
+            toggleBtn.textContent = 'Cadastre-se';
+        }
+    }
+
+    document.getElementById('authForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        const name = authMode === 'register' ? document.getElementById('registerName').value : 'Usuário';
+
+        usuarioAtual = {
+            email: email,
+            name: name || 'Usuário'
+        };
+
+        localStorage.setItem('usuarioAtual', JSON.stringify(usuarioAtual));
+
+        mostrarApp();
+        inicializarApp();
+    });
+
+    function logout() {
+        localStorage.removeItem('usuarioAtual');
+        usuarioAtual = null;
+        document.getElementById('authContainer').style.display = 'flex';
+        document.getElementById('appContainer').classList.remove('active');
+        document.getElementById('authForm').reset();
+        authMode = 'login';
+        toggleAuthMode();
+    }
+
+    function mostrarApp() {
+        document.getElementById('authContainer').style.display = 'none';
+        document.getElementById('appContainer').classList.add('active');
+
+        document.getElementById('userNameDisplay').textContent = usuarioAtual.name;
+        document.getElementById('userEmailDisplay').textContent = usuarioAtual.email;
+    }
+
+    // ============================================
+    // LÓGICA CENTRAL - TOCA & COELHINHOS
+    // ============================================
+    const VALOR_POR_COELHO = 10;
+
+    let estado = {
+        totalGuardado: 0,
+        aportes: [],
+        conquistas: []
+    };
+
+    function carregarEstado() {
+        const salvo = localStorage.getItem(`estado_${usuarioAtual.email}`);
+        if (salvo) {
+            estado = JSON.parse(salvo);
+        } else {
+            estado = {
+                totalGuardado: 0,
+                aportes: [],
+                conquistas: []
+            };
+        }
+    }
+
+    function salvarEstado() {
+        localStorage.setItem(`estado_${usuarioAtual.email}`, JSON.stringify(estado));
+    }
+
+    function getTotalCoelhos() {
+        return Math.floor(estado.totalGuardado / VALOR_POR_COELHO);
+    }
+
+    function adicionarAporte() {
+        const valor = parseFloat(document.getElementById('aporteValor').value);
+        const data = document.getElementById('aporteData').value || new Date().toISOString().split('T')[0];
+
+        if (!valor || valor <= 0) {
+            alert('Digite um valor válido');
+            return;
+        }
+
+        estado.aportes.push({
+            valor: valor,
+            data: data,
+            timestamp: new Date(data).getTime()
+        });
+
+        estado.totalGuardado += valor;
+        salvarEstado();
+
+        document.getElementById('aporteValor').value = '';
+        atualizarUI();
+        verificarConquistas();
+        gerarRespostaNina();
+    }
+
+    function atualizarUI() {
+        // Atualizar totais
+        const totalCoelhos = getTotalCoelhos();
+        document.getElementById('totalGuardado').textContent = `R$ ${estado.totalGuardado.toFixed(2)}`;
+        document.getElementById('totalCoelhos').textContent = `${totalCoelhos} 🐰`;
+
+        // Atualizar visuals dos coelhos
+        const container = document.getElementById('coelhosContainer');
+        container.innerHTML = '';
+
+        for (let i = 0; i < totalCoelhos; i++) {
+            const coelho = document.createElement('div');
+            coelho.className = 'coelho-item novo';
+
+            // A cada 10 coelhos, fazer um especial
+            if ((i + 1) % 10 === 0) {
+                coelho.classList.add('especial');
+                coelho.textContent = '✨';
+            } else {
+                coelho.textContent = i % 2 === 0 ? '🐰' : '🐇';
+            }
+
+            container.appendChild(coelho);
+        }
+
+        // Atualizar histórico
+        atualizarHistorico();
+
+        // Atualizar stats do mês
+        const agora = new Date();
+        const aportesMes = estado.aportes.filter(a => {
+            const dataAporte = new Date(a.data);
+            return dataAporte.getMonth() === agora.getMonth() && dataAporte.getFullYear() === agora.getFullYear();
+        });
+
+        const totalMes = aportesMes.reduce((sum, a) => sum + a.valor, 0);
+        document.getElementById('aportesNoMes').textContent = aportesMes.length;
+        document.getElementById('totalNoMes').textContent = `R$ ${totalMes.toFixed(2)}`;
+
+        // Atualizar streak
+        atualizarStreak();
+    }
+
+    function atualizarHistorico() {
+        const list = document.getElementById('historicoList');
+        list.innerHTML = '';
+
+        const aportesSorted = [...estado.aportes].sort((a, b) => b.timestamp - a.timestamp).slice(0, 8);
+
+        aportesSorted.forEach(a => {
+            const item = document.createElement('div');
+            item.className = 'historico-item';
+
+            const data = new Date(a.data).toLocaleDateString('pt-BR');
+            const coelhos = Math.floor(a.valor / VALOR_POR_COELHO);
+
+            item.innerHTML = `
+                <div class="historico-data">${data}</div>
+                <div style="margin: 4px 0;">R$ ${a.valor.toFixed(2)} guardados</div>
+                <div class="historico-coelhos">+${coelhos} 🐰 coelhinhos</div>
+            `;
+
+            list.appendChild(item);
+        });
+
+        if (aportesSorted.length === 0) {
+            list.innerHTML = '<p style="color: var(--cinza); text-align: center;">Nenhum aporte ainda</p>';
+        }
+    }
+
+    function atualizarStreak() {
+        // Calcular semanas consecutivas com aporte
+        const agora = new Date();
+        let streakSemanas = 0;
+
+        for (let i = 0; i < 52; i++) {
+            const dataInicio = new Date(agora);
+            dataInicio.setDate(agora.getDate() - (i * 7));
+            const dataFim = new Date(dataInicio);
+            dataFim.setDate(dataInicio.getDate() + 6);
+
+            const temAporte = estado.aportes.some(a => {
+                const dataAporte = new Date(a.data);
+                return dataAporte >= dataInicio && dataAporte <= dataFim;
+            });
+
+            if (temAporte) {
+                streakSemanas++;
+            } else {
+                break;
+            }
+        }
+
+        document.getElementById('streakValue').textContent = `${streakSemanas} 🔥`;
+    }
+
+    // ============================================
+    // SIMULADOR INTERATIVO
+    // ============================================
+    function atualizarSimulador() {
+        const aporte = parseInt(document.getElementById('sliderAporte').value);
+        const prazo = parseInt(document.getElementById('sliderPrazo').value);
+
+        document.getElementById('sliderAporteLabel').textContent = `R$ ${aporte}`;
+        document.getElementById('sliderPrazoLabel').textContent = `${prazo} meses`;
+
+        // Cálculo simples: aporte × prazo (sem juros compostos para simplificar)
+        const total = aporte * prazo;
+        const coelhos = Math.floor(total / VALOR_POR_COELHO);
+
+        document.getElementById('simTotal').textContent = total.toFixed(0);
+        document.getElementById('simCoelhos').textContent = coelhos;
+
+        // Comparação
+        const ocasional = 400; // 3 aportes de ~R$ 133
+        document.getElementById('compOcasional').textContent = ocasional.toFixed(0);
+        document.getElementById('compConstante').textContent = (aporte * 12).toFixed(0);
+    }
+
+    document.getElementById('sliderAporte').addEventListener('input', atualizarSimulador);
+    document.getElementById('sliderPrazo').addEventListener('input', atualizarSimulador);
+
+    // ============================================
+    // NINA - COACH IA
+    // ============================================
+    function gerarRespostaNina() {
+        const messages = document.getElementById('chatMessages');
+        const streak = parseInt(document.getElementById('streakValue').textContent);
+        const totalMes = parseFloat(document.getElementById('totalNoMes').textContent.replace('R$ ', ''));
+        const diasDesdeUltimoAporte = calcularDiasDesdeUltimoAporte();
+
+        let resposta = '';
+
+        if (estado.aportes.length === 1) {
+            resposta = '🎉 Que legal! Você fez seu primeiro aporte! Isso é o começo de uma jornada incrível. Seus coelhinhos acabaram de nascer!';
+        } else if (diasDesdeUltimoAporte > 7) {
+            resposta = 'Oi! Notei que faz um tempinho... Tudo bem? Quer pausar a meta ou ajustar o valor? Sem pressão! 💚';
+        } else if (totalMes > 500) {
+            resposta = '😍 Wow! Você está arrasando esse mês! Que tal aumentar um pouquinho a meta do próximo?';
+        } else if (streak >= 4) {
+            resposta = '🔥 Você está com uma sequência incrível! Já são ' + streak + ' semanas! Continua assim!';
+        } else {
+            resposta = '💭 Como está sendo sua experiência até agora? Alguma dúvida sobre como funciona?';
+        }
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'msg nina';
+        msgDiv.innerHTML = `
+            <div class="avatar">🤖</div>
+            <div class="msg-text">${resposta}</div>
+        `;
+
+        messages.appendChild(msgDiv);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function calcularDiasDesdeUltimoAporte() {
+        if (estado.aportes.length === 0) return 999;
+
+        const ultimoAporte = estado.aportes[estado.aportes.length - 1];
+        const dataUltimo = new Date(ultimoAporte.data);
+        const agora = new Date();
+
+        const dias = Math.floor((agora - dataUltimo) / (1000 * 60 * 60 * 24));
+        return dias;
+    }
+
+    // ============================================
+    // CONQUISTAS & BADGES
+    // ============================================
+    const BADGES_DEFINICOES = [
+        {
+            id: 'primeiro_aporte',
+            nome: 'Primeiro Passo',
+            emoji: '🏆',
+            descricao: 'Fez o primeiro aporte',
+            condicao: () => estado.aportes.length >= 1
+        },
+        {
+            id: 'semana_1',
+            nome: 'Consistência',
+            emoji: '🔥',
+            descricao: '1 semana com aporte',
+            condicao: () => parseInt(document.getElementById('streakValue').textContent) >= 1
+        },
+        {
+            id: 'mes_completo',
+            nome: 'Fiel',
+            emoji: '💪',
+            descricao: '4 semanas seguidas',
+            condicao: () => parseInt(document.getElementById('streakValue').textContent) >= 4
+        },
+        {
+            id: 'coelho_raro',
+            nome: 'Coelho Raro',
+            emoji: '✨',
+            descricao: '20 coelhinhos',
+            condicao: () => getTotalCoelhos() >= 20
+        },
+        {
+            id: 'milestone_100',
+            nome: 'Centésimo!',
+            emoji: '💯',
+            descricao: '100 coelhinhos',
+            condicao: () => getTotalCoelhos() >= 100
+        },
+        {
+            id: 'resiliente',
+            nome: 'Resiliente',
+            emoji: '💚',
+            descricao: 'Retomou após pausa',
+            condicao: () => estado.aportes.length >= 5 && Math.max(...estado.aportes.map((_, i, arr) => {
+                if (i === arr.length - 1) return 0;
+                const diff = new Date(arr[i + 1].data) - new Date(arr[i].data);
+                return Math.floor(diff / (1000 * 60 * 60 * 24));
+            })) > 14
+        },
+        {
+            id: 'mil_reais',
+            nome: 'Milésimo',
+            emoji: '💰',
+            descricao: 'R$ 1.000 guardados',
+            condicao: () => estado.totalGuardado >= 1000
+        },
+        {
+            id: 'sonhador',
+            nome: 'Sonhador',
+            emoji: '🌟',
+            descricao: 'R$ 5.000 guardados',
+            condicao: () => estado.totalGuardado >= 5000
+        }
+    ];
+
+    function verificarConquistas() {
+        BADGES_DEFINICOES.forEach(badge => {
+            if (badge.condicao() && !estado.conquistas.includes(badge.id)) {
+                estado.conquistas.push(badge.id);
+                salvarEstado();
+            }
+        });
+
+        renderizarBadges();
+    }
+
+    function renderizarBadges() {
+        const grid = document.getElementById('badgesGrid');
+        grid.innerHTML = '';
+
+        BADGES_DEFINICOES.forEach(badge => {
+            const isUnlocked = estado.conquistas.includes(badge.id);
+
+            const div = document.createElement('div');
+            div.className = `badge-item ${isUnlocked ? 'unlocked' : 'locked'}`;
+
+            div.innerHTML = `
+                <div class="badge-emoji">${badge.emoji}</div>
+                <div class="badge-name">${badge.nome}</div>
+                <div class="badge-desc">${badge.descricao}</div>
+            `;
+
+            grid.appendChild(div);
+        });
+    }
+
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    function inicializarApp() {
+        carregarEstado();
+
+        // Set default date to today
+        const agora = new Date().toISOString().split('T')[0];
+        document.getElementById('aporteData').value = agora;
+
+        atualizarUI();
+        atualizarSimulador();
+        renderizarBadges();
+
+        // Simular primeira mensagem de Nina
+        if (estado.aportes.length === 0) {
+            const messages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg nina';
+            msgDiv.innerHTML = `
+                <div class="avatar">🤖</div>
+                <div class="msg-text">Oi! Sou a Nina, sua coach financeira pessoal 💚. Bem-vindo à Toca! Aqui você aprende a poupar de forma leve e divertida. Quer começar agora?</div>
+            `;
+            messages.appendChild(msgDiv);
+        } else {
+            gerarRespostaNina();
+        }
+    }
+
+    // Carregar usuário e inicializar se já estiver logado
+    window.addEventListener('DOMContentLoaded', () => {
+        const usuarioSalvo = localStorage.getItem('usuarioAtual');
+        if (usuarioSalvo) {
+            usuarioAtual = JSON.parse(usuarioSalvo);
+            mostrarApp();
+            inicializarApp();
+        }
+    });
+
+    function resetarDemo() {
+        if (confirm('Tem certeza que deseja reiniciar a demonstração? Todos os dados serão apagados.')) {
+            localStorage.removeItem(`estado_${usuarioAtual.email}`);
+            estado = {
+                totalGuardado: 0,
+                aportes: [],
+                conquistas: []
+            };
+            atualizarUI();
+            atualizarSimulador();
+            renderizarBadges();
+
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML = '';
+            gerarRespostaNina();
+        }
+    }
+</script>
+
+</body>
+</html>
